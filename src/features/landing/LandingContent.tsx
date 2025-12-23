@@ -2,12 +2,12 @@ import Markdown from "markdown-to-jsx/react"
 import useTestQuery from "../useTestQuery"
 
 const LandingContent = () => {
-    const data = useTestQuery()
-
+    const { treeData, markdownData } = useTestQuery()
     return (
         <div>
             <h1>여기는 랜딩 콘텐트</h1>
-            <Markdown>{data}</Markdown>
+            <p>{JSON.stringify(treeData)}</p>
+            <Markdown>{markdownData}</Markdown>
         </div>
     )
 }
