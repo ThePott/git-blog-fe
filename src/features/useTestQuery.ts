@@ -1,11 +1,13 @@
 import { headlessInstance } from "@/shared/config/axiosInstance"
+import useGlobalStore from "@/shared/store/globalStore"
 import { useQuery } from "@tanstack/react-query"
 import { useCallback, useEffect } from "react"
 
-const useTestTreeQuery = () => {
+const useTreeQuery = () => {
+    const setTreeArray = useGlobalStore((state) => state.setTreeArray)
     const treeRequest = useCallback(async () => {
         const response = await headlessInstance.get("/github/tree")
-        return response.data
+        return response.data as { mode: string; path: string; sha: string; type: string; url: string }[]
     }, [])
 
     const { data } = useQuery({
@@ -17,12 +19,13 @@ const useTestTreeQuery = () => {
         if (!data) {
             return
         }
-    }, [data])
 
-    return { treeData: data }
+        const treeArray = data.map((el) => el.path)
+        setTreeArray(treeArray)
+    }, [data])
 }
 
-const useTestMarkdownQuery = () => {
+const useMarkdownQuery = () => {
     const markdownRequest = useCallback(async () => {
         const response = await headlessInstance.get("/github/markdown/specific-example")
         return response.data
@@ -42,11 +45,11 @@ const useTestMarkdownQuery = () => {
     return { markdownData: data }
 }
 
-const useTestQuery = () => {
-    const treeReturns = useTestTreeQuery()
-    const markdownReturns = useTestMarkdownQuery()
+const useGitHubQuery = () => {
+    useTreeQuery()
+    const markdownReturns = useMarkdownQuery()
 
-    return { ...treeReturns, ...markdownReturns }
+    return { ...markdownReturns }
 }
 
-export default useTestQuery
+export default useGitHubQuery
