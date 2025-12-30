@@ -20,7 +20,9 @@ const useTreeQuery = () => {
             return
         }
 
-        const treeArray = data.map((el) => el.path)
+        const treeArray = data
+            .filter((el) => el.path.includes("src") && el.path !== "src")
+            .map((el) => el.path.replace("src", ""))
         setTreeArray(treeArray)
     }, [data])
 }

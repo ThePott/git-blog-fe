@@ -4,9 +4,19 @@ import reactHooks from "eslint-plugin-react-hooks"
 import reactRefresh from "eslint-plugin-react-refresh"
 import tseslint from "typescript-eslint"
 import { defineConfig, globalIgnores } from "eslint/config"
+import pluginRouter from "@tanstack/eslint-plugin-router"
 
-const baseArray = [globalIgnores(["dist", "node_module", ".husky"])]
-const baseConfig = {
+const baseArray = [
+    globalIgnores(["dist", "node_module", ".husky", ".tanstack"]),
+    {
+        files: ["src/routes/**/*.tsx"],
+        rules: {
+            "react-refresh/only-export-components": "off",
+        },
+    },
+    ...pluginRouter.configs["flat/recommended"],
+]
+const reactConfigBase = {
     files: ["**/*.{ts,tsx}"],
     extends: [
         js.configs.recommended,
@@ -19,7 +29,7 @@ const baseConfig = {
         globals: globals.browser,
     },
 }
-const rules = {
+const reactConfigRules = {
     "prefer-const": "error", // 재할당하지 않는 변수는 const 사용 권장 (경고만)
     "@typescript-eslint/no-unused-vars": [
         "error", // 에러 대신 경고로 설정
@@ -36,4 +46,4 @@ const rules = {
     "react-hooks/exhaustive-deps": "off",
 }
 
-export default defineConfig([...baseArray, { ...baseConfig, rules }])
+export default defineConfig([{ ...reactConfigBase, rules: reactConfigRules }, ...baseArray])
