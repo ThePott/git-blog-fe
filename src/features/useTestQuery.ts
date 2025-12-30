@@ -1,16 +1,18 @@
 import { headlessInstance } from "@/shared/config/axiosInstance"
-import useGlobalStore from "@/shared/store/globalStore"
+import useTreeStore from "@/shared/store/treeStore"
 import { useQuery } from "@tanstack/react-query"
 import { useCallback, useEffect } from "react"
 
 const useTreeQuery = () => {
-    const setTreeArray = useGlobalStore((state) => state.setTreeArray)
+    const setTreeArray = useTreeStore((state) => state.setTreeArray)
+    const setIsPending = useTreeStore((state) => state.setIsPending)
+
     const treeRequest = useCallback(async () => {
         const response = await headlessInstance.get("/github/tree")
         return response.data as { mode: string; path: string; sha: string; type: string; url: string }[]
     }, [])
 
-    const { data } = useQuery({
+    const { data, isPending } = useQuery({
         queryKey: ["tree"],
         queryFn: treeRequest,
     })
@@ -25,6 +27,10 @@ const useTreeQuery = () => {
             .map((el) => el.path.replace("src", ""))
         setTreeArray(treeArray)
     }, [data])
+
+    useEffect(() => {
+        setIsPending(isPending)
+    }, [isPending])
 }
 
 const useMarkdownQuery = () => {
