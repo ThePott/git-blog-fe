@@ -7,7 +7,7 @@ import { defineConfig, globalIgnores } from "eslint/config"
 import pluginRouter from "@tanstack/eslint-plugin-router"
 
 const baseArray = [
-    globalIgnores(["dist", "node_module", ".husky", ".tanstack"]),
+    globalIgnores(["dist", "node_module", ".husky", ".tanstack", "/src/routeTree.gen.ts"]),
     {
         files: ["src/routes/**/*.tsx"],
         rules: {

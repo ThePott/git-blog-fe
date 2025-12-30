@@ -6,3 +6,4 @@ dist
 
 .husky
 .tanstack
+/src/routeTree.gen.ts
