@@ -1,8 +1,8 @@
-import useGlobalStore from "@/shared/store/globalStore"
+import useTreeStore from "@/shared/store/treeStore"
 import { useNavigate } from "@tanstack/react-router"
 
 const LandingContent = () => {
-    const treeArray = useGlobalStore((state) => state.treeArray)
+    const treeArray = useTreeStore((state) => state.treeArray)
     const navigate = useNavigate()
 
     return (

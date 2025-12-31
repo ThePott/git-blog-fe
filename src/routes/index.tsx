@@ -1,11 +1,5 @@
-import LandingContent from "@/features/landing/LandingContent"
-import useGitHubQuery from "@/features/useTestQuery"
+import LandingPage from "@/features/routeComponents/landing/LandingPage"
 import { createFileRoute } from "@tanstack/react-router"
-
-const LandingPage = () => {
-    useGitHubQuery()
-    return <LandingContent />
-}
 
 export const Route = createFileRoute("/")({
     component: LandingPage,

@@ -53,11 +53,11 @@ const useMarkdownQuery = () => {
     return { markdownData: data }
 }
 
-const useGitHubQuery = () => {
+const useGithubQuery = () => {
     useTreeQuery()
     const markdownReturns = useMarkdownQuery()
 
     return { ...markdownReturns }
 }
 
-export default useGitHubQuery
+export default useGithubQuery

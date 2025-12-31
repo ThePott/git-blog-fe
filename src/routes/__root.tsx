@@ -1,14 +1,4 @@
-import useGitHubQuery from "@/features/useTestQuery"
-import { createRootRoute, Outlet } from "@tanstack/react-router"
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools"
+import RootLayout from "@/features/routeComponents/root/RootLayout"
+import { createRootRoute } from "@tanstack/react-router"
 
-const RootLayout = () => {
-    useGitHubQuery()
-    return (
-        <>
-            <Outlet />
-            <TanStackRouterDevtools />
-        </>
-    )
-}
 export const Route = createRootRoute({ component: RootLayout })

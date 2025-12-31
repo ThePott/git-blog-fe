@@ -1,6 +1,8 @@
 import useTreeStore from "@/shared/store/treeStore"
 import { useParams } from "@tanstack/react-router"
 
+type GithubPathStatus = "valid" | "isPending" | "invalid"
+
 const useGithubPath = () => {
     // NOTE: subtitle: useValidateGithubPath
     const treeArray = useTreeStore((state) => state.treeArray)
@@ -10,11 +12,11 @@ const useGithubPath = () => {
     if (!githubPath) throw new Error("---- github path not provided")
 
     const path = githubPath[0] === "/" ? githubPath : `/${githubPath}`
-    const isError = !treeArray.includes(path) && !isPending
+    const status: GithubPathStatus = treeArray.includes(path) ? "valid" : isPending ? "isPending" : "invalid"
 
-    if (isError) throw new Error("---- not correct tree")
+    if (status === "invalid") throw new Error("---- not correct tree")
 
-    return path
+    return { path, status }
 }
 
 export default useGithubPath
