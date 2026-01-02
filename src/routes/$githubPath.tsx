@@ -7,4 +7,5 @@ export const Route = createFileRoute("/$githubPath")({
     component: GithubPathPage,
     errorComponent: ({ error, reset }) => GithubPathError({ error, reset }),
     pendingComponent: GithubPathSkeleton,
+    loader: ({ params }) => {},
 })

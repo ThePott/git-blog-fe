@@ -1,4 +1,4 @@
-import useTreeStore from "@/shared/store/treeStore"
+import useTreeStore from "@/features/github/tree/treeStore"
 import { useNavigate } from "@tanstack/react-router"
 
 const LandingContent = () => {
@@ -10,7 +10,7 @@ const LandingContent = () => {
             <h1>여기는 랜딩 콘텐트</h1>
             {treeArray.map((tree) => (
                 <div className="border border-white p-3">
-                    <button onClick={() => navigate({ to: tree })}>{tree}</button>
+                    <button onClick={() => navigate({ to: tree.path })}>{tree.path}</button>
                 </div>
             ))}
         </div>

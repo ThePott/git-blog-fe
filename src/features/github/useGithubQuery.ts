@@ -1,63 +1,63 @@
-import { headlessInstance } from "@/shared/config/axiosInstance"
-import useTreeStore from "@/shared/store/treeStore"
-import { useQuery } from "@tanstack/react-query"
-import { useCallback, useEffect } from "react"
-
-const useTreeQuery = () => {
-    const setTreeArray = useTreeStore((state) => state.setTreeArray)
-    const setIsPending = useTreeStore((state) => state.setIsPending)
-
-    const treeRequest = useCallback(async () => {
-        const response = await headlessInstance.get("/github/tree")
-        return response.data as { mode: string; path: string; sha: string; type: string; url: string }[]
-    }, [])
-
-    const { data, isPending } = useQuery({
-        queryKey: ["tree"],
-        queryFn: treeRequest,
-    })
-
-    useEffect(() => {
-        if (!data) {
-            return
-        }
-
-        const treeArray = data
-            .filter((el) => el.path.includes("src") && el.path !== "src")
-            .map((el) => el.path.replace("src", ""))
-        setTreeArray(treeArray)
-    }, [data])
-
-    useEffect(() => {
-        setIsPending(isPending)
-    }, [isPending])
-}
-
-const useMarkdownQuery = () => {
-    const markdownRequest = useCallback(async () => {
-        const response = await headlessInstance.get("/github/markdown/specific-example")
-        return response.data
-    }, [])
-
-    const { data } = useQuery({
-        queryKey: ["markdown"],
-        queryFn: markdownRequest,
-    })
-
-    useEffect(() => {
-        if (!data) {
-            return
-        }
-    }, [data])
-
-    return { markdownData: data }
-}
-
-const useGithubQuery = () => {
-    useTreeQuery()
-    const markdownReturns = useMarkdownQuery()
-
-    return { ...markdownReturns }
-}
-
-export default useGithubQuery
+// import { headlessInstance } from "@/shared/config/axiosInstance"
+// import { useQuery } from "@tanstack/react-query"
+// import { useCallback, useEffect } from "react"
+// import useTreeStore from "./tree/treeStore"
+//
+// const useTreeQuery = () => {
+//     const setTreeArray = useTreeStore((state) => state.setTreeArray)
+//     const setIsPending = useTreeStore((state) => state.setIsPending)
+//
+//     const treeRequest = useCallback(async () => {
+//         const response = await headlessInstance.get("/github/tree")
+//         return response.data as { mode: string; path: string; sha: string; type: string; url: string }[]
+//     }, [])
+//
+//     const { data, isPending } = useQuery({
+//         queryKey: ["tree"],
+//         queryFn: treeRequest,
+//     })
+//
+//     useEffect(() => {
+//         if (!data) {
+//             return
+//         }
+//
+//         const treeArray = data
+//             .filter((el) => el.path.includes("src") && el.path !== "src")
+//             .map((el) => el.path.replace("src", ""))
+//         setTreeArray(treeArray)
+//     }, [data])
+//
+//     useEffect(() => {
+//         setIsPending(isPending)
+//     }, [isPending])
+// }
+//
+// const useMarkdownQuery = () => {
+//     const markdownRequest = useCallback(async () => {
+//         const response = await headlessInstance.get("/github/markdown/specific-example")
+//         return response.data
+//     }, [])
+//
+//     const { data } = useQuery({
+//         queryKey: ["markdown"],
+//         queryFn: markdownRequest,
+//     })
+//
+//     useEffect(() => {
+//         if (!data) {
+//             return
+//         }
+//     }, [data])
+//
+//     return { markdownData: data }
+// }
+//
+// const useGithubQuery = () => {
+//     useTreeQuery()
+//     const markdownReturns = useMarkdownQuery()
+//
+//     return { ...markdownReturns }
+// }
+//
+// export default useGithubQuery
