@@ -1,4 +1,4 @@
-import useTreeStore from "@/features/github/tree/treeStore"
+import useTreeStore from "@/features/github/treeStore"
 import { useNavigate } from "@tanstack/react-router"
 
 const LandingContent = () => {

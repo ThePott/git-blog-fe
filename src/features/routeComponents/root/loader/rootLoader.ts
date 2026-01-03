@@ -1,11 +1,11 @@
-import useTreeStore from "@/features/github/tree/treeStore"
-import type { Tree } from "@/features/github/tree/treeTypes"
+import useTreeStore from "@/features/github/treeStore"
+import type { Tree } from "@/features/github/treeTypes"
 import { headlessInstance } from "@/shared/config/axiosInstance"
 import type { EnsureQueryDataOptions, QueryClient } from "@tanstack/react-query"
 
 // NOTE: only fetch
 const getTree = async () => {
-    const response = await headlessInstance.get("/github/tree")
+    const response = await headlessInstance.get("/github/tree?type=tree")
     return response.data as Tree[]
 }
 
