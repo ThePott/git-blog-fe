@@ -1,5 +1,4 @@
 import type { Content } from "@/features/github/githubTypes"
-import GithubPathError from "@/features/routeComponents/githubPath/error/GithubPathError"
 import GithubPathPage from "@/features/routeComponents/githubPath/page/GithubPathPage"
 import GithubPathSkeleton from "@/features/routeComponents/githubPath/skeleton/GithubPathSkeleton"
 import { headlessInstance } from "@/shared/config/axiosInstance"
@@ -14,7 +13,6 @@ const githubContentLoaderFn = async (_splat: string | undefined) => {
 
 export const Route = createFileRoute("/$")({
     component: GithubPathPage,
-    errorComponent: ({ error, reset }) => GithubPathError({ error, reset }),
     pendingComponent: GithubPathSkeleton,
     loader: ({ params: { _splat } }) => githubContentLoaderFn(_splat),
 })

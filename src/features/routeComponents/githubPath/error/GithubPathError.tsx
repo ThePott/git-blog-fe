@@ -3,9 +3,6 @@ import { useEffect } from "react"
 
 const GithubPathError = ({ error, reset }: { error: Error; reset: () => void }) => {
     const treeArray = useTreeStore((state) => state.treeArray)
-    useEffect(() => {
-        reset()
-    }, [treeArray])
 
     return (
         <div>
