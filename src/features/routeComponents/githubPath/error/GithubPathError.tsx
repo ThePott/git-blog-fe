@@ -1,4 +1,4 @@
-import useTreeStore from "@/features/github/treeStore"
+import useTreeStore from "@/features/github/githubStore"
 import { useEffect } from "react"
 
 const GithubPathError = ({ error, reset }: { error: Error; reset: () => void }) => {
