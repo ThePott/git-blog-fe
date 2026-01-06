@@ -6,6 +6,7 @@ export type Tree = {
     url: string
 }
 
+export type ContentType = "dir" | "file"
 export type Content = {
     name: string
     path: string
@@ -15,7 +16,7 @@ export type Content = {
     html_url: string
     git_url: string
     download_url: string
-    type: string
+    type: ContentType
     _links: {
         self: string
         git: string
