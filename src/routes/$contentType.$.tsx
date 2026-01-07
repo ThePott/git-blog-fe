@@ -6,14 +6,20 @@ import { createFileRoute } from "@tanstack/react-router"
 
 const contentTypeArray = ["dir", "file"] as const
 type ContentType = (typeof contentTypeArray)[number]
-type GithubContentLoaderFnProps = {
-    contentType: ContentType
+
+type GithubContentLoaderFnProps<T extends ContentType> = {
+    contentType: T
     _splat: string | undefined
 }
-const githubContentLoaderFn = async ({ contentType, _splat }: GithubContentLoaderFnProps) => {
+type ReturnType<T extends ContentType> = T extends "dir" ? Content[] : string
+
+const githubContentLoaderFn = async <T extends ContentType>({
+    contentType,
+    _splat,
+}: GithubContentLoaderFnProps<T>): Promise<ReturnType<T>> => {
     if (!_splat) throw new Error("---- 주소가 제공되지 않았습니다")
     const response = await headlessInstance.get(`/github/content/${contentType}/${_splat}`)
-    const data = response.data as Content[]
+    const data = response.data
     return data
 }
 

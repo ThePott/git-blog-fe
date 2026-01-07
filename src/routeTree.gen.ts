@@ -10,11 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FileSplatRouteImport } from './routes/file.$'
+import { Route as DirSplatRouteImport } from './routes/dir.$'
 import { Route as ContentTypeSplatRouteImport } from './routes/$contentType.$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FileSplatRoute = FileSplatRouteImport.update({
+  id: '/file/$',
+  path: '/file/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DirSplatRoute = DirSplatRouteImport.update({
+  id: '/dir/$',
+  path: '/dir/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContentTypeSplatRoute = ContentTypeSplatRouteImport.update({
@@ -26,27 +38,35 @@ const ContentTypeSplatRoute = ContentTypeSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$contentType/$': typeof ContentTypeSplatRoute
+  '/dir/$': typeof DirSplatRoute
+  '/file/$': typeof FileSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$contentType/$': typeof ContentTypeSplatRoute
+  '/dir/$': typeof DirSplatRoute
+  '/file/$': typeof FileSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$contentType/$': typeof ContentTypeSplatRoute
+  '/dir/$': typeof DirSplatRoute
+  '/file/$': typeof FileSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$contentType/$'
+  fullPaths: '/' | '/$contentType/$' | '/dir/$' | '/file/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$contentType/$'
-  id: '__root__' | '/' | '/$contentType/$'
+  to: '/' | '/$contentType/$' | '/dir/$' | '/file/$'
+  id: '__root__' | '/' | '/$contentType/$' | '/dir/$' | '/file/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContentTypeSplatRoute: typeof ContentTypeSplatRoute
+  DirSplatRoute: typeof DirSplatRoute
+  FileSplatRoute: typeof FileSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -56,6 +76,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/file/$': {
+      id: '/file/$'
+      path: '/file/$'
+      fullPath: '/file/$'
+      preLoaderRoute: typeof FileSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dir/$': {
+      id: '/dir/$'
+      path: '/dir/$'
+      fullPath: '/dir/$'
+      preLoaderRoute: typeof DirSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$contentType/$': {
@@ -71,6 +105,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContentTypeSplatRoute: ContentTypeSplatRoute,
+  DirSplatRoute: DirSplatRoute,
+  FileSplatRoute: FileSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
