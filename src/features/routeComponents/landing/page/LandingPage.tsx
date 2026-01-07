@@ -11,7 +11,7 @@ const LandingContent = () => {
             <h1>여기는 랜딩 콘텐트</h1>
             {treeArray.map((tree) => (
                 <RoundBox key={tree.sha} className="border border-white p-3">
-                    <button onClick={() => navigate({ to: tree.path })}>{tree.path}</button>
+                    <button onClick={() => navigate({ to: `/dir/${tree.path}` })}>{tree.path}</button>
                 </RoundBox>
             ))}
         </div>
