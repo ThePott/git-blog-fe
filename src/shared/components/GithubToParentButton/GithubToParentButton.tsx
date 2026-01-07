@@ -1,11 +1,12 @@
 import { useNavigate } from "@tanstack/react-router"
 
 type MakeParentDirProps = {
-    currentGithubPath: string
+    currentGithubPath: string | undefined
 }
-const makeParentDir = ({ currentGithubPath }: MakeParentDirProps): string | null => {
+const makeParentDir = ({ currentGithubPath }: MakeParentDirProps): string => {
+    if (!currentGithubPath) return ""
     const splittedArray = currentGithubPath.split("/")
-    if (splittedArray.length <= 1) return null
+    if (splittedArray.length <= 1) return ""
 
     splittedArray.pop()
     const parentDir = splittedArray.join("/")
@@ -13,13 +14,11 @@ const makeParentDir = ({ currentGithubPath }: MakeParentDirProps): string | null
 }
 
 type GithubToParentButton = {
-    currentGithubPath: string
+    currentGithubPath: string | undefined
 }
 const GithubToParentButton = ({ currentGithubPath }: GithubToParentButton) => {
     const navigate = useNavigate()
     const parentDir = makeParentDir({ currentGithubPath })
-
-    if (!parentDir) return null
 
     const handleGoBack = () => {
         navigate({ to: `/dir/${parentDir}` })

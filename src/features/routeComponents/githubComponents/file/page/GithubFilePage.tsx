@@ -1,4 +1,4 @@
-import GithubToParentButton from "@/shared/components/GoBackButton/GoBackButton"
+import GithubToParentButton from "@/shared/components/GithubToParentButton/GithubToParentButton"
 import Vstack from "@/shared/components/layouts/Vstak/Vstack"
 import { useLoaderData, useParams } from "@tanstack/react-router"
 import Markdown from "markdown-to-jsx"
