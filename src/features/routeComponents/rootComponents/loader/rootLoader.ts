@@ -1,5 +1,5 @@
-import useTreeStore from "@/features/github/githubStore"
 import type { Tree } from "@/features/github/githubTypes"
+import useTreeStore from "@/features/github/store/githubStore"
 import { headlessInstance } from "@/shared/config/axiosInstance"
 import type { EnsureQueryDataOptions, QueryClient } from "@tanstack/react-query"
 

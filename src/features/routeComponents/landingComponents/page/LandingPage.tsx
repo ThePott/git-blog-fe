@@ -1,4 +1,4 @@
-import useTreeStore from "@/features/github/githubStore"
+import useTreeStore from "@/features/github/store/githubStore"
 import RoundBox from "@/shared/components/RoundBox/RoundBox"
 import { useNavigate } from "@tanstack/react-router"
 

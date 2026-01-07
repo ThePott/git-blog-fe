@@ -1,11 +1,12 @@
 import type { Content } from "@/features/github/githubTypes"
+import Vstack from "@/shared/components/layouts/Vstak/Vstack"
 import RoundBox from "@/shared/components/RoundBox/RoundBox"
-import { useNavigate } from "@tanstack/react-router"
+import { useLoaderData, useNavigate, useParams } from "@tanstack/react-router"
 
-type DirSectionProps = {
-    contentArray: Content[]
-}
-const DirSection = ({ contentArray }: DirSectionProps) => {
+const GithubDirPage = () => {
+    const data = useLoaderData({ from: "/dir/$" })
+    const { _splat } = useParams({ from: "/dir/$" })
+
     const navigate = useNavigate()
 
     const handleClick = (content: Content) => {
@@ -20,8 +21,9 @@ const DirSection = ({ contentArray }: DirSectionProps) => {
     }
 
     return (
-        <div>
-            {contentArray.map((content) => (
+        <Vstack>
+            <p>{_splat}</p>
+            {data.map((content) => (
                 <RoundBox onClick={() => handleClick(content)}>
                     <p>name: {content.name}</p>
                     <p>path: {content.path}</p>
@@ -29,8 +31,8 @@ const DirSection = ({ contentArray }: DirSectionProps) => {
                     <p>github link: {content._links.html}</p>
                 </RoundBox>
             ))}
-        </div>
+        </Vstack>
     )
 }
 
-export default DirSection
+export default GithubDirPage

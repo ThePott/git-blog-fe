@@ -1,9 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
+import githubDirLoaderFn from "@/features/routeComponents/githubComponents/dir/loader/githubDirLoader"
+import GithubDirPage from "@/features/routeComponents/githubComponents/dir/page/GithubDirPage"
+import GithubDirSkeleton from "@/features/routeComponents/githubComponents/dir/skeleton/GithubDirSkeleton"
+import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/dir/$')({
-  component: RouteComponent,
+export const Route = createFileRoute("/dir/$")({
+    component: GithubDirPage,
+    pendingComponent: GithubDirSkeleton,
+    loader: async ({ params: { _splat } }) => await githubDirLoaderFn({ _splat }),
 })
-
-function RouteComponent() {
-  return <div>Hello "/dir/$"!</div>
-}

@@ -1,5 +1,5 @@
-import rootLoaderFn from "@/features/routeComponents/root/loader/rootLoader"
-import RootLayout from "@/features/routeComponents/root/RootLayout"
+import rootLoaderFn from "@/features/routeComponents/rootComponents/loader/rootLoader"
+import RootLayout from "@/features/routeComponents/rootComponents/RootLayout"
 import type { RouterContext } from "@/main"
 import { createRootRouteWithContext } from "@tanstack/react-router"
 
