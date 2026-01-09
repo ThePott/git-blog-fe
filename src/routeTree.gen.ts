@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MonkeytypeIndexRouteImport } from './routes/monkeytype/index'
 import { Route as GithubIndexRouteImport } from './routes/github/index'
 import { Route as GithubFileSplatRouteImport } from './routes/github/file.$'
 import { Route as GithubDirSplatRouteImport } from './routes/github/dir.$'
@@ -17,6 +18,11 @@ import { Route as GithubDirSplatRouteImport } from './routes/github/dir.$'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MonkeytypeIndexRoute = MonkeytypeIndexRouteImport.update({
+  id: '/monkeytype/',
+  path: '/monkeytype/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GithubIndexRoute = GithubIndexRouteImport.update({
@@ -38,12 +44,14 @@ const GithubDirSplatRoute = GithubDirSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/github': typeof GithubIndexRoute
+  '/monkeytype': typeof MonkeytypeIndexRoute
   '/github/dir/$': typeof GithubDirSplatRoute
   '/github/file/$': typeof GithubFileSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/github': typeof GithubIndexRoute
+  '/monkeytype': typeof MonkeytypeIndexRoute
   '/github/dir/$': typeof GithubDirSplatRoute
   '/github/file/$': typeof GithubFileSplatRoute
 }
@@ -51,20 +59,33 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/github/': typeof GithubIndexRoute
+  '/monkeytype/': typeof MonkeytypeIndexRoute
   '/github/dir/$': typeof GithubDirSplatRoute
   '/github/file/$': typeof GithubFileSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/github' | '/github/dir/$' | '/github/file/$'
+  fullPaths:
+    | '/'
+    | '/github'
+    | '/monkeytype'
+    | '/github/dir/$'
+    | '/github/file/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/github' | '/github/dir/$' | '/github/file/$'
-  id: '__root__' | '/' | '/github/' | '/github/dir/$' | '/github/file/$'
+  to: '/' | '/github' | '/monkeytype' | '/github/dir/$' | '/github/file/$'
+  id:
+    | '__root__'
+    | '/'
+    | '/github/'
+    | '/monkeytype/'
+    | '/github/dir/$'
+    | '/github/file/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   GithubIndexRoute: typeof GithubIndexRoute
+  MonkeytypeIndexRoute: typeof MonkeytypeIndexRoute
   GithubDirSplatRoute: typeof GithubDirSplatRoute
   GithubFileSplatRoute: typeof GithubFileSplatRoute
 }
@@ -76,6 +97,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/monkeytype/': {
+      id: '/monkeytype/'
+      path: '/monkeytype'
+      fullPath: '/monkeytype'
+      preLoaderRoute: typeof MonkeytypeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/github/': {
@@ -105,6 +133,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   GithubIndexRoute: GithubIndexRoute,
+  MonkeytypeIndexRoute: MonkeytypeIndexRoute,
   GithubDirSplatRoute: GithubDirSplatRoute,
   GithubFileSplatRoute: GithubFileSplatRoute,
 }
