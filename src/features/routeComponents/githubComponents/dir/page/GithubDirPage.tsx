@@ -5,17 +5,17 @@ import RoundBox from "@/shared/components/RoundBox/RoundBox"
 import { useLoaderData, useNavigate, useParams } from "@tanstack/react-router"
 
 const GithubDirPage = () => {
-    const data = useLoaderData({ from: "/dir/$" })
-    const { _splat } = useParams({ from: "/dir/$" })
+    const data = useLoaderData({ from: "/github/dir/$" })
+    const { _splat } = useParams({ from: "/github/dir/$" })
     const navigate = useNavigate()
 
     const handleClick = (content: Content) => {
         switch (content.type) {
             case "dir":
-                navigate({ to: `/dir/${content.path}` })
+                navigate({ to: `/github/dir/${content.path}` })
                 return
             case "file":
-                navigate({ to: `/file/${content.path}` })
+                navigate({ to: `/github/file/${content.path}` })
                 return
         }
     }

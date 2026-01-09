@@ -21,7 +21,7 @@ const GithubToParentButton = ({ currentGithubPath }: GithubToParentButton) => {
     const parentDir = makeParentDir({ currentGithubPath })
 
     const handleGoBack = () => {
-        navigate({ to: `/dir/${parentDir}` })
+        navigate({ to: `/github/dir/${parentDir}` })
     }
 
     return <button onClick={handleGoBack}>To Parent</button>

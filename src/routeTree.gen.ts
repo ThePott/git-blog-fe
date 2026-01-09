@@ -10,53 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as FileSplatRouteImport } from './routes/file.$'
-import { Route as DirSplatRouteImport } from './routes/dir.$'
+import { Route as GithubIndexRouteImport } from './routes/github/index'
+import { Route as GithubFileSplatRouteImport } from './routes/github/file.$'
+import { Route as GithubDirSplatRouteImport } from './routes/github/dir.$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FileSplatRoute = FileSplatRouteImport.update({
-  id: '/file/$',
-  path: '/file/$',
+const GithubIndexRoute = GithubIndexRouteImport.update({
+  id: '/github/',
+  path: '/github/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DirSplatRoute = DirSplatRouteImport.update({
-  id: '/dir/$',
-  path: '/dir/$',
+const GithubFileSplatRoute = GithubFileSplatRouteImport.update({
+  id: '/github/file/$',
+  path: '/github/file/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GithubDirSplatRoute = GithubDirSplatRouteImport.update({
+  id: '/github/dir/$',
+  path: '/github/dir/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dir/$': typeof DirSplatRoute
-  '/file/$': typeof FileSplatRoute
+  '/github': typeof GithubIndexRoute
+  '/github/dir/$': typeof GithubDirSplatRoute
+  '/github/file/$': typeof GithubFileSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dir/$': typeof DirSplatRoute
-  '/file/$': typeof FileSplatRoute
+  '/github': typeof GithubIndexRoute
+  '/github/dir/$': typeof GithubDirSplatRoute
+  '/github/file/$': typeof GithubFileSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/dir/$': typeof DirSplatRoute
-  '/file/$': typeof FileSplatRoute
+  '/github/': typeof GithubIndexRoute
+  '/github/dir/$': typeof GithubDirSplatRoute
+  '/github/file/$': typeof GithubFileSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dir/$' | '/file/$'
+  fullPaths: '/' | '/github' | '/github/dir/$' | '/github/file/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dir/$' | '/file/$'
-  id: '__root__' | '/' | '/dir/$' | '/file/$'
+  to: '/' | '/github' | '/github/dir/$' | '/github/file/$'
+  id: '__root__' | '/' | '/github/' | '/github/dir/$' | '/github/file/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DirSplatRoute: typeof DirSplatRoute
-  FileSplatRoute: typeof FileSplatRoute
+  GithubIndexRoute: typeof GithubIndexRoute
+  GithubDirSplatRoute: typeof GithubDirSplatRoute
+  GithubFileSplatRoute: typeof GithubFileSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -68,18 +78,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/file/$': {
-      id: '/file/$'
-      path: '/file/$'
-      fullPath: '/file/$'
-      preLoaderRoute: typeof FileSplatRouteImport
+    '/github/': {
+      id: '/github/'
+      path: '/github'
+      fullPath: '/github'
+      preLoaderRoute: typeof GithubIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dir/$': {
-      id: '/dir/$'
-      path: '/dir/$'
-      fullPath: '/dir/$'
-      preLoaderRoute: typeof DirSplatRouteImport
+    '/github/file/$': {
+      id: '/github/file/$'
+      path: '/github/file/$'
+      fullPath: '/github/file/$'
+      preLoaderRoute: typeof GithubFileSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/github/dir/$': {
+      id: '/github/dir/$'
+      path: '/github/dir/$'
+      fullPath: '/github/dir/$'
+      preLoaderRoute: typeof GithubDirSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -87,8 +104,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DirSplatRoute: DirSplatRoute,
-  FileSplatRoute: FileSplatRoute,
+  GithubIndexRoute: GithubIndexRoute,
+  GithubDirSplatRoute: GithubDirSplatRoute,
+  GithubFileSplatRoute: GithubFileSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

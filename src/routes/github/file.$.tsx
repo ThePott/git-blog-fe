@@ -3,7 +3,7 @@ import GithubFilePage from "@/features/routeComponents/githubComponents/file/pag
 import GithubFileSkeleton from "@/features/routeComponents/githubComponents/file/skeleton/GithubFileSkeleton"
 import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute("/file/$")({
+export const Route = createFileRoute("/github/file/$")({
     component: GithubFilePage,
     pendingComponent: GithubFileSkeleton,
     loader: async ({ params: { _splat } }) => await githubFileLoaderFn({ _splat }),

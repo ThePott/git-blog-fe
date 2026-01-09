@@ -4,8 +4,8 @@ import { useLoaderData, useParams } from "@tanstack/react-router"
 import Markdown from "markdown-to-jsx"
 
 const GithubFilePage = () => {
-    const data = useLoaderData({ from: "/file/$" })
-    const { _splat } = useParams({ from: "/file/$" })
+    const data = useLoaderData({ from: "/github/file/$" })
+    const { _splat } = useParams({ from: "/github/file/$" })
 
     if (!_splat) throw new Error("---- file path not provided")
 
