@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MonkeytypeIndexRouteImport } from './routes/monkeytype/index'
 import { Route as GithubIndexRouteImport } from './routes/github/index'
+import { Route as MonkeytypeTestIndexRouteImport } from './routes/monkeytype/test.index'
 import { Route as GithubFileSplatRouteImport } from './routes/github/file.$'
 import { Route as GithubDirSplatRouteImport } from './routes/github/dir.$'
 
@@ -28,6 +29,11 @@ const MonkeytypeIndexRoute = MonkeytypeIndexRouteImport.update({
 const GithubIndexRoute = GithubIndexRouteImport.update({
   id: '/github/',
   path: '/github/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MonkeytypeTestIndexRoute = MonkeytypeTestIndexRouteImport.update({
+  id: '/monkeytype/test/',
+  path: '/monkeytype/test/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GithubFileSplatRoute = GithubFileSplatRouteImport.update({
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/monkeytype': typeof MonkeytypeIndexRoute
   '/github/dir/$': typeof GithubDirSplatRoute
   '/github/file/$': typeof GithubFileSplatRoute
+  '/monkeytype/test': typeof MonkeytypeTestIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/monkeytype': typeof MonkeytypeIndexRoute
   '/github/dir/$': typeof GithubDirSplatRoute
   '/github/file/$': typeof GithubFileSplatRoute
+  '/monkeytype/test': typeof MonkeytypeTestIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,6 +70,7 @@ export interface FileRoutesById {
   '/monkeytype/': typeof MonkeytypeIndexRoute
   '/github/dir/$': typeof GithubDirSplatRoute
   '/github/file/$': typeof GithubFileSplatRoute
+  '/monkeytype/test/': typeof MonkeytypeTestIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -71,8 +80,15 @@ export interface FileRouteTypes {
     | '/monkeytype'
     | '/github/dir/$'
     | '/github/file/$'
+    | '/monkeytype/test'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/github' | '/monkeytype' | '/github/dir/$' | '/github/file/$'
+  to:
+    | '/'
+    | '/github'
+    | '/monkeytype'
+    | '/github/dir/$'
+    | '/github/file/$'
+    | '/monkeytype/test'
   id:
     | '__root__'
     | '/'
@@ -80,6 +96,7 @@ export interface FileRouteTypes {
     | '/monkeytype/'
     | '/github/dir/$'
     | '/github/file/$'
+    | '/monkeytype/test/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -88,6 +105,7 @@ export interface RootRouteChildren {
   MonkeytypeIndexRoute: typeof MonkeytypeIndexRoute
   GithubDirSplatRoute: typeof GithubDirSplatRoute
   GithubFileSplatRoute: typeof GithubFileSplatRoute
+  MonkeytypeTestIndexRoute: typeof MonkeytypeTestIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -113,6 +131,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GithubIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/monkeytype/test/': {
+      id: '/monkeytype/test/'
+      path: '/monkeytype/test'
+      fullPath: '/monkeytype/test'
+      preLoaderRoute: typeof MonkeytypeTestIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/github/file/$': {
       id: '/github/file/$'
       path: '/github/file/$'
@@ -136,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   MonkeytypeIndexRoute: MonkeytypeIndexRoute,
   GithubDirSplatRoute: GithubDirSplatRoute,
   GithubFileSplatRoute: GithubFileSplatRoute,
+  MonkeytypeTestIndexRoute: MonkeytypeTestIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
